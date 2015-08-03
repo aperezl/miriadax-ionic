@@ -18,13 +18,18 @@ exports.load = function(req, res, next, quizId) {
 exports.index = function(req, res) {
   var where = {};
   var search = req.query.search || '';
-  console.log('por aqui')
   if(req.query.search) {
     where = {where: ["pregunta like ?", '%' + search.replace(' ', '%') + '%'], order: 'pregunta'};
   }
   models.Quiz.findAll(where).then(function(quizes) {
-    res.render('quizes/index.ejs', {quizes: quizes, query: search, errors: []});
-  }).catch(function(error) { next(error);} );
+    var result = {quizes: quizes, query: search, errors: []};
+    if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+      res.send(result);
+    } else {
+      res.render('quizes/index.ejs', result);
+    }
+
+  }).catch(function(error) { consoel.log('se ha producido un error'); next(error);} );
 };
 
 // GET /quizes/question
