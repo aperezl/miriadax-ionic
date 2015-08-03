@@ -24,17 +24,31 @@
   <body ng-app="starter">
 
     <ion-nav-view>
-    <ion-nav-bar class="bar-positive"></ion-nav-bar>
+      <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+      </ion-nav-bar>
     </ion-nav-view>
 
 
+    <script id="tabs.html" type="text/ng-template">
+      <ion-tabs class="tabs-icon-top tabs-positive">
+        <ion-tab title="Home" icon="ion-home" href="#/tab/home">
+          <ion-nav-view name="home-tab"></ion-nav-view>
+        </ion-tab>
+
+        <ion-tab title="Home" icon="ion-home" href="#/tab/quizes">
+          <ion-nav-view name="quizes-tab"></ion-nav-view>
+        </ion-tab>
+      </ion-tabs>
+    </script>
 
     <script id="home.html" type="text/ng-template">
       <ion-view view-title="Home">
         <ion-content ng-controller="mainCtrl">
           <h2>Bienvenido a Quiz</h2>
           <p>El portal donde podrá crear sus propios juegos!</p>
-          <a href="#/quizes">Quizes</a>
+          <a href="#/tab/quizes">Quizes</a>
         </ion-content>
       </ion-view>
     </script>
@@ -46,20 +60,27 @@
           </button>
 
           <ion-list>
-            <ion-item  ng-repeat="quiz in quizes">
+            <ion-item href="#/tab/quizes/{{quiz._id}}" ng-repeat="quiz in quizes">
               <h2>{{quiz.pregunta}}</h2>
               <p>{{quiz.tema}}</p>
 
-              <ion-option-button class="button-assertive" ng-click="delete(item)">
+              <ion-option-button class="button-assertive" ng-click="delete(quiz)">
                 Delete
               </ion-option-button>
-              <ion-option-button class="button-calm" ng-click="edit(item)">
+              <ion-option-button class="button-calm" ng-click="edit(quiz)">
                 Edit
               </ion-option-button>
             </ion-item>
           </ion-list>
           </ion-content>
         </ion-view>
+    </script>
+    <script id="quizes_view.html" type="text/ng-template">
+      <ion-view view-title="hjkasd">
+        <ion-content>
+          hola
+        </ion-content>
+      </ion-view>
     </script>
   </body>
 </html>

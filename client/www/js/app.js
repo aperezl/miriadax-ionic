@@ -18,17 +18,44 @@ angular.module('starter', ['ionic'])
   });
 })
 
-.config(function($stateProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-  .state('index', {
-    url: '/',
-    templateUrl: 'home.html'
+  .state('tabs', {
+    url: "/tab",
+    abstract: true,
+    templateUrl: "tabs.html"
   })
-  .state('quizes', {
+  .state('tabs.home', {
+    url: '/home',
+    views: {
+        'home-tab': {
+          templateUrl: "home.html",
+          controller: 'mainCtrl'
+        }
+      }
+  })
+  .state('tabs.quizes', {
     url: '/quizes',
-    templateUrl: 'quizes.html'
+    views: {
+      'quizes-tab': {
+        templateUrl: 'quizes.html',
+        controller: 'mainCtrl'
+      }
+    }
   })
+  .state('tabs.quizesView', {
+    url: '/quizes/:id',
+    views: {
+      'quizes-tab': {
+        templateUrl: 'quizes_view.html',
+        controller: 'mainCtrl'
+      }
+    }
+  })
+  $urlRouterProvider.otherwise("/tab/home");
 })
+
+
 
 
 .controller('mainCtrl', function($scope, $http) {
@@ -44,7 +71,11 @@ angular.module('starter', ['ionic'])
     console.log('Delete quiz');
   };
 
-  $scope.edit = function() {
-    console.log('View quiz')
+  $scope.edit = function(item) {
+    console.log('View quiz', item)
+  }
+
+  $scope.view = function(item) {
+    console.log('view', item);
   }
 });
